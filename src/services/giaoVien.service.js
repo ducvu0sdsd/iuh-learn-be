@@ -1,12 +1,21 @@
 'use strict'
 const GiaoVienModel = require('../models/GiaoVien.model')
 const khoaService = require('./khoa.service')
+const authUtils = require('../utils/auth')
 
 class GiaoVienService {
 
     create = async (gv) => {
+        const hashPassword = await authUtils.hashPassword('123456')
+        gv.password = hashPassword
         const created = await GiaoVienModel.create(gv)
         return created
+    }
+
+    getById = async (id) => {
+        const gv = await GiaoVienModel.findById(id).lean()
+        const khoa = await khoaService.getById(gv.maKhoa)
+        return { ...gv, khoa }
     }
 
     getAll = async () => {

@@ -15,4 +15,5 @@ router.use('/api/v1/hocky', require('./hocky'))
 router.use('/api/v1/sinhvien', require('./sinhvien'))
 router.use('/api/v1/phong', require('./phong'))
 router.use('/api/v1/hocphan', require('./hocphan'))
+router.use('/api/v1/change-request', require('./change-request'))
 module.exports = router

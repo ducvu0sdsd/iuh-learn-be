@@ -5,6 +5,8 @@ const StudentModel = require('../models/SinhVien.model')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const StudentService = require('../services/sinhVien.service')
+const TeacherModel = require('../models/GiaoVien.model')
+const TeacherService = require('../services/giaoVien.service')
 
 class AuthService {
 
@@ -22,6 +24,24 @@ class AuthService {
             }
         } catch (error) {
             throw new Error('Không tìm thấy tài khoản');
+        }
+    }
+
+    signInWithTeacher = async (username, pass) => {
+        const teacherFound = await TeacherModel.findOne({ soDienThoai: username })
+        const teacher = await TeacherService.getById(teacherFound._id)
+        if (teacher) {
+            const isMatch = await bcrypt.compare(pass, teacher.password);
+            if (isMatch) {
+                return {
+                    teacher,
+                    tokens: await this.generateTokens({ user_id: teacher._id })
+                }
+            } else {
+                throw new Error(`Số điện thoại giáo viên hoặc mật khẩu không trùng khớp`);
+            }
+        } else {
+            throw new Error('Không tìm thấy giáo viên')
         }
     }
 

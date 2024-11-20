@@ -23,6 +23,11 @@ class KhoaService {
         return updated
     }
 
+    getById = async (id) => {
+        const founded = await KhoaModel.findById(id)
+        return founded
+    }
+
 }
 
 module.exports = new KhoaService()

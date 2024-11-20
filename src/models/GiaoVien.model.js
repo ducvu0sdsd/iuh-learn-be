@@ -29,7 +29,9 @@ var GiaoVienSchema = new mongoose.Schema({
     },
     soDienThoai: {
         type: String,
-    }
+    }, password: {
+        type: String,
+    },
 });
 
 //Export the model

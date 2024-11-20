@@ -7,7 +7,9 @@ var HocKySchema = new mongoose.Schema({
     },
     choPhepDangKy: {
         type: Boolean,
-    }
+    },
+    fromDate: Date,
+    toDate: Date
 });
 
 //Export the model
