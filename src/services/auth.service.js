@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const StudentService = require('../services/sinhVien.service')
 const TeacherModel = require('../models/GiaoVien.model')
 const TeacherService = require('../services/giaoVien.service')
+const authUtils = require('../utils/auth')
 
 class AuthService {
 
@@ -60,6 +61,35 @@ class AuthService {
             }
         } else {
             throw new Error('Không tìm thấy sinh viên')
+        }
+    }
+    forgotPasswordWithStudent = async (_id, oldPass, newPass) => {
+        const studentFound = await StudentModel.findById(_id).lean()
+        if (studentFound) {
+            const isMatch = await bcrypt.compare(oldPass, studentFound.password);
+            if (isMatch) {
+                const hashPassword = await authUtils.hashPassword(newPass)
+                studentFound.password = hashPassword
+                const updated = StudentModel.findByIdAndUpdate(_id, studentFound, { new: true })
+                return updated
+            } else {
+                throw new Error(`Mật khẩu cũ không trùng khớp`);
+            }
+        }
+    }
+
+    forgotPasswordWithTeacher = async (_id, oldPass, newPass) => {
+        const teacherFound = await TeacherModel.findById(_id).lean()
+        if (teacherFound) {
+            const isMatch = await bcrypt.compare(oldPass, teacherFound.password);
+            if (isMatch) {
+                const hashPassword = await authUtils.hashPassword(newPass)
+                teacherFound.password = hashPassword
+                const updated = TeacherModel.findByIdAndUpdate(_id, teacherFound, { new: true })
+                return updated
+            } else {
+                throw new Error(`Mật khẩu cũ không trùng khớp`);
+            }
         }
     }
 

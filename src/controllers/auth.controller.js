@@ -44,6 +44,20 @@ class AuthController {
         const user = await TeacherService.getById(req.userid)
         return responseWithTokens(req, res, user, 200)
     }
+
+    forgotPasswordWithStudent = async (req, res) => {
+        const { id, oldPass, newPass } = req.body
+        authService.forgotPasswordWithStudent(id, oldPass, newPass)
+            .then(user => responseWithTokens(req, res, user, 200))
+            .catch(error => responseWithTokens(req, res, error.message, 500))
+    }
+
+    forgotPasswordWithTeacher = async (req, res) => {
+        const { id, oldPass, newPass } = req.body
+        authService.forgotPasswordWithTeacher(id, oldPass, newPass)
+            .then(user => responseWithTokens(req, res, user, 200))
+            .catch(error => responseWithTokens(req, res, error.message, 500))
+    }
 }
 
 module.exports = new AuthController()
