@@ -27,7 +27,8 @@ var ChangeRequestSchema = new mongoose.Schema({
                 month: Number,
                 year: Number
             },
-            hocKy: mongoose.Schema.Types.Mixed
+            hocKy: mongoose.Schema.Types.Mixed,
+            loaiPhong: String
         }
     },
     response: {

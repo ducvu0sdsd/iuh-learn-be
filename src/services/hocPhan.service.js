@@ -5,12 +5,14 @@ const GiaoVienService = require('./giaoVien.service')
 const LopService = require('./lop.service')
 const HocKyService = require('./hocKy.service')
 const PhongService = require('./phong.service')
+const randomMaHocPhan = require('../utils/mahocphan')
 
 class HocPhanService {
 
     create = async (hocphan) => {
         try {
-            const created = await HocPhanModel.create(hocphan)
+            const maHocPhan = randomMaHocPhan()
+            const created = await HocPhanModel.create({ ...hocphan, maHocPhan })
             return created
         } catch (error) {
             console.log(error)

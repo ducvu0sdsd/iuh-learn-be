@@ -13,6 +13,9 @@ var PhongSchema = new mongoose.Schema({
     },
     loai: {
         type: String // lt hay th
+    },
+    siSo: {
+        type: Number
     }
 });
 

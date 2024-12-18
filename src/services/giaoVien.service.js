@@ -14,6 +14,7 @@ class GiaoVienService {
 
     getById = async (id) => {
         const gv = await GiaoVienModel.findById(id).lean()
+        console.log(gv)
         const khoa = await khoaService.getById(gv.maKhoa)
         return { ...gv, khoa }
     }

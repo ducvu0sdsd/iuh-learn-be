@@ -2,6 +2,9 @@ const mongoose = require('mongoose'); // Erase if already required
 
 // Declare the Schema of the Mongo model
 var HocPhanSchema = new mongoose.Schema({
+    maHocPhan: {
+        type: String
+    },
     monHoc: {
         maMon: {
             type: mongoose.Schema.Types.ObjectId,
